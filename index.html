@@ -5,92 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Image Display</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 20px;
-            background-color: #f4f4f4;
-            padding: 20px;
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        .controls {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: large;
-        }
-
-        .controls .header {
-            font-size: x-large;
-            font-weight: bold;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-items: center;
-            width: 100%;
-        }
-        
-        button {
-            font-family: inherit; /* Ensure the button inherits the font-family from the body */
-        }
-
-        @keyframes shuffle {
-            0% {
-                transform: translateX(0) rotate(0);
-                opacity: 0;
-            }
-            50% {
-                transform: translateX(100px) rotate(10deg);
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateX(0) rotate(0);
-                opacity: 1;
-            }
-        }
-
-        .image-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            animation: shuffle 0.5s ease-in-out;
-        }
-
-        img {
-            width: 180px;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .index {
-            font-size: 16px;
-            color: #333;
-        }
-
-        .name {
-            font-size: 16px;
-            color: #555;
-        }
-
-        .checkbox-list {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -102,7 +17,7 @@
     <div class="grid-container" id="grid-container"></div>
 
     <script>
-        // List of local image filenames and corresponding names
+        // the list of persons with their image and name
         let imageObjects = [
             { src: "img/anand.jpg", name: "Anand" },
             { src: "img/brian.jpg", name: "Brian" },
@@ -135,19 +50,15 @@
         }
 
         function shuffleAndDisplayImages() {
-            // Get selected images
             const selectedImages = imageObjects.filter((_, index) => {
                 return document.getElementById(`checkbox-${index}`).checked;
             });
 
-            // Shuffle the selected images
             selectedImages.sort(() => Math.random() - 0.5);
 
-            // Get the grid container
             const gridContainer = document.getElementById('grid-container');
             gridContainer.innerHTML = ''; // Clear previous content
 
-            // Display images with index and name
             selectedImages.forEach((imageObject, index) => {
                 let container = document.createElement("div");
                 container.className = "image-container";
@@ -170,7 +81,6 @@
             });
         }
 
-        // Initial setup
         createCheckboxList();
         shuffleAndDisplayImages();
     </script>
