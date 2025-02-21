@@ -7,12 +7,20 @@
     <title>Random Image Display</title>
     <style>
         body {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
             background-color: #f4f4f4;
             padding: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             justify-items: center;
+            width: 100%;
         }
 
         @keyframes shuffle {
@@ -58,6 +66,9 @@
 </head>
 
 <body>
+    <button onclick="shuffleAndDisplayImages()">New Order Please!</button>
+    <div class="grid-container" id="grid-container"></div>
+
     <script>
         // List of local image filenames and corresponding names
         let imageObjects = [
@@ -71,30 +82,39 @@
             { src: "img/huy.jpeg", name: "Huy" }
         ];
 
-        // Shuffle the image objects
-        imageObjects.sort(() => Math.random() - 0.5);
+        function shuffleAndDisplayImages() {
+            // Shuffle the image objects
+            imageObjects.sort(() => Math.random() - 0.5);
 
-        // Display images with index and name
-        imageObjects.forEach((imageObject, index) => {
-            let container = document.createElement("div");
-            container.className = "image-container";
+            // Get the grid container
+            const gridContainer = document.getElementById('grid-container');
+            gridContainer.innerHTML = ''; // Clear previous content
 
-            let indexLabel = document.createElement("div");
-            indexLabel.className = "index";
-            indexLabel.textContent = `${index + 1}`;
+            // Display images with index and name
+            imageObjects.forEach((imageObject, index) => {
+                let container = document.createElement("div");
+                container.className = "image-container";
 
-            let img = document.createElement("img");
-            img.src = imageObject.src;
+                let indexLabel = document.createElement("div");
+                indexLabel.className = "index";
+                indexLabel.textContent = `${index + 1}`;
 
-            let nameLabel = document.createElement("div");
-            nameLabel.className = "name";
-            nameLabel.textContent = imageObject.name;
+                let img = document.createElement("img");
+                img.src = imageObject.src;
 
-            container.appendChild(indexLabel);
-            container.appendChild(img);
-            container.appendChild(nameLabel);
-            document.body.appendChild(container);
-        });
+                let nameLabel = document.createElement("div");
+                nameLabel.className = "name";
+                nameLabel.textContent = imageObject.name;
+
+                container.appendChild(indexLabel);
+                container.appendChild(img);
+                container.appendChild(nameLabel);
+                gridContainer.appendChild(container);
+            });
+        }
+
+        // Initial display
+        shuffleAndDisplayImages();
     </script>
 </body>
 
