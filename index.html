@@ -8,11 +8,28 @@
     <style>
         body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            align-items: flex-start;
             gap: 20px;
             background-color: #f4f4f4;
             padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: large;
+        }
+
+        .controls .header {
+            font-size: x-large;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .grid-container {
@@ -21,6 +38,10 @@
             gap: 20px;
             justify-items: center;
             width: 100%;
+        }
+        
+        button {
+            font-family: inherit; /* Ensure the button inherits the font-family from the body */
         }
 
         @keyframes shuffle {
@@ -62,11 +83,22 @@
             font-size: 16px;
             color: #555;
         }
+
+        .checkbox-list {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <button onclick="shuffleAndDisplayImages()">New Order Please!</button>
+    <div class="controls">
+        <div class="header">Who are here?</div>
+        <div class="checkbox-list" id="checkbox-list"></div>
+        <button onclick="shuffleAndDisplayImages()">New Order Please!</button>
+    </div>
     <div class="grid-container" id="grid-container"></div>
 
     <script>
@@ -82,16 +114,41 @@
             { src: "img/huy.jpeg", name: "Huy" }
         ];
 
+        function createCheckboxList() {
+            const checkboxList = document.getElementById('checkbox-list');
+            imageObjects.forEach((imageObject, index) => {
+                const checkboxContainer = document.createElement('div');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `checkbox-${index}`;
+                checkbox.checked = true;
+                checkbox.addEventListener('change', shuffleAndDisplayImages);
+
+                const label = document.createElement('label');
+                label.htmlFor = `checkbox-${index}`;
+                label.textContent = imageObject.name;
+
+                checkboxContainer.appendChild(checkbox);
+                checkboxContainer.appendChild(label);
+                checkboxList.appendChild(checkboxContainer);
+            });
+        }
+
         function shuffleAndDisplayImages() {
-            // Shuffle the image objects
-            imageObjects.sort(() => Math.random() - 0.5);
+            // Get selected images
+            const selectedImages = imageObjects.filter((_, index) => {
+                return document.getElementById(`checkbox-${index}`).checked;
+            });
+
+            // Shuffle the selected images
+            selectedImages.sort(() => Math.random() - 0.5);
 
             // Get the grid container
             const gridContainer = document.getElementById('grid-container');
             gridContainer.innerHTML = ''; // Clear previous content
 
             // Display images with index and name
-            imageObjects.forEach((imageObject, index) => {
+            selectedImages.forEach((imageObject, index) => {
                 let container = document.createElement("div");
                 container.className = "image-container";
 
@@ -113,7 +170,8 @@
             });
         }
 
-        // Initial display
+        // Initial setup
+        createCheckboxList();
         shuffleAndDisplayImages();
     </script>
 </body>
