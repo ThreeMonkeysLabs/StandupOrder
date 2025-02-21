@@ -7,12 +7,12 @@
     <title>Random Image Display</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             background-color: #f4f4f4;
             padding: 20px;
+            justify-items: center;
         }
 
         @keyframes shuffle {
@@ -32,13 +32,14 @@
 
         .image-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 10px;
             animation: shuffle 0.5s ease-in-out;
         }
 
         img {
-            width: 200px;
+            width: 180px;
             height: auto;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
@@ -48,26 +49,33 @@
             font-size: 16px;
             color: #333;
         }
+
+        .name {
+            font-size: 16px;
+            color: #555;
+        }
     </style>
 </head>
 
 <body>
     <script>
-        // List of local image filenames
-        let images = ["img/image1.jpeg",
-            "img/image2.jpeg", 
-            "img/image3.jpeg", 
-            "img/image4.jpeg",
-            "img/image5.jpeg", 
-            "img/image6.jpeg", 
-            "img/image7.jpeg", 
-            "img/image8.jpeg"];
+        // List of local image filenames and corresponding names
+        let imageObjects = [
+            { src: "img/anand.jpg", name: "Anand" },
+            { src: "img/brian.jpg", name: "Brian" },
+            { src: "img/image3.jpeg", name: "Corby" },
+            { src: "img/hong.jpg", name: "Hong" },
+            { src: "img/johan.jpg", name: "Johan" },
+            { src: "img/jonas.jpeg", name: "Jonas" },
+            { src: "img/martin.png", name: "Martin" },
+            { src: "img/huy.jpeg", name: "Huy" }
+        ];
 
-        // Shuffle the images
-        images.sort(() => Math.random() - 0.5);
+        // Shuffle the image objects
+        imageObjects.sort(() => Math.random() - 0.5);
 
-        // Display images with index
-        images.forEach((src, index) => {
+        // Display images with index and name
+        imageObjects.forEach((imageObject, index) => {
             let container = document.createElement("div");
             container.className = "image-container";
 
@@ -76,10 +84,15 @@
             indexLabel.textContent = `${index + 1}`;
 
             let img = document.createElement("img");
-            img.src = src;
+            img.src = imageObject.src;
+
+            let nameLabel = document.createElement("div");
+            nameLabel.className = "name";
+            nameLabel.textContent = imageObject.name;
 
             container.appendChild(indexLabel);
             container.appendChild(img);
+            container.appendChild(nameLabel);
             document.body.appendChild(container);
         });
     </script>
