@@ -34,6 +34,18 @@ body {
 
 button {
     font-family: inherit; /* Ensure the button inherits the font-family from the body */
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px 20px; /* Optional: Add some padding for better appearance */
+    border: none; /* Optional: Remove default border */
+    background-color: #007BFF; /* Optional: Add background color */
+    color: white; /* Optional: Add text color */
+    cursor: pointer; /* Optional: Change cursor to pointer */
+    width: 200px; /* Set a fixed width for all buttons */
+    text-align: center; /* Center the text inside the button */
+}
+
+button:hover {
+    background-color: #0056b3; /* Optional: Add hover effect */
 }
 
 @keyframes shuffle {
@@ -41,10 +53,12 @@ button {
         transform: translateX(0) rotate(0);
         opacity: 0;
     }
+
     50% {
         transform: translateX(100px) rotate(10deg);
         opacity: 0.5;
     }
+
     100% {
         transform: translateX(0) rotate(0);
         opacity: 1;
@@ -67,8 +81,29 @@ img {
 }
 
 .index {
+    font-weight: bold;
+    color: #333;
+}
+
+.index {
     font-size: 16px;
     color: #333;
+}
+
+.index.highlight {
+    position: relative;
+    font-size: 35px;
+    color: gold;
+    font-weight: bold;
+}
+
+.index.highlight::before {
+    content: "★";
+    position: absolute;
+    left: -25px;
+    top: -5px;
+    font-size: 35px;
+    color: gold;
 }
 
 .name {
@@ -81,4 +116,10 @@ img {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add spacing between checkbox and label */
 }

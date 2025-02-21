@@ -10,14 +10,14 @@
 
 <body>
     <div class="controls">
-        <div class="header">Who are here?</div>
+        <div class="header">Who's here?</div>
         <div class="checkbox-list" id="checkbox-list"></div>
         <button onclick="shuffleAndDisplayImages()">New Order Please!</button>
+        <button onclick="moveHighlight()">Who's next?</button>
     </div>
     <div class="grid-container" id="grid-container"></div>
 
     <script>
-        // the list of persons with their image and name
         let imageObjects = [
             { src: "img/anand.jpg", name: "Anand" },
             { src: "img/brian.jpg", name: "Brian" },
@@ -29,10 +29,14 @@
             { src: "img/huy.jpeg", name: "Huy" }
         ];
 
+        let currentHighlightIndex = 0;
+
         function createCheckboxList() {
             const checkboxList = document.getElementById('checkbox-list');
             imageObjects.forEach((imageObject, index) => {
                 const checkboxContainer = document.createElement('div');
+                checkboxContainer.className = 'checkbox-container'; // Add this line
+
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.id = `checkbox-${index}`;
@@ -65,6 +69,9 @@
 
                 let indexLabel = document.createElement("div");
                 indexLabel.className = "index";
+                if (index === currentHighlightIndex) {
+                    indexLabel.classList.add("highlight");
+                }
                 indexLabel.textContent = `${index + 1}`;
 
                 let img = document.createElement("img");
@@ -79,6 +86,16 @@
                 container.appendChild(nameLabel);
                 gridContainer.appendChild(container);
             });
+        }
+
+        function moveHighlight() {
+            const gridContainer = document.getElementById('grid-container');
+            const indexElements = gridContainer.getElementsByClassName('index');
+            if (indexElements.length > 0) {
+                indexElements[currentHighlightIndex].classList.remove('highlight');
+                currentHighlightIndex = (currentHighlightIndex + 1) % indexElements.length;
+                indexElements[currentHighlightIndex].classList.add('highlight');
+            }
         }
 
         createCheckboxList();
