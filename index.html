@@ -12,7 +12,7 @@
     <div class="controls">
         <div class="header">Who's here?</div>
         <div class="checkbox-list" id="checkbox-list"></div>
-        <button onclick="shuffleAndDisplayImages()">New Order Please!</button>
+
         <button onclick="moveHighlight()">Who's next?</button>
     </div>
     <div class="grid-container" id="grid-container"></div>
@@ -24,7 +24,7 @@
             { src: "img/image3.jpeg", name: "Corby" },
             { src: "img/hong.jpg", name: "Hong" },
             { src: "img/johan.jpg", name: "Johan" },
-            { src: "img/jonas.jpeg", name: "Jonas" },
+            { src: "img/jonas.jpeg", name: "Jonas (Snöras)" },
             { src: "img/martin.png", name: "Martin" },
             { src: "img/huy.jpeg", name: "Huy" }
         ];
@@ -54,6 +54,8 @@
         }
 
         function shuffleAndDisplayImages() {
+            currentHighlightIndex = 0; // Reset the highlight index to 0
+
             const selectedImages = imageObjects.filter((_, index) => {
                 return document.getElementById(`checkbox-${index}`).checked;
             });
